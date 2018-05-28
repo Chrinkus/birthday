@@ -1,4 +1,8 @@
-# birthday
+# Birthday
+
+![Prompt](./img/Prompt_1.png)
+
+![Results](./img/Results_1.png)
 
 A small project with specific goals:
 - build on top of two libraries (FLTK and Boost)

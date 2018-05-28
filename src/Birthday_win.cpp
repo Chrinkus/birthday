@@ -2,12 +2,37 @@
 // Birthday project
 //
 
-#include "Prompt_window.hpp"
+#include "Birthday_win.hpp"
 #include "date_time_ext.hpp"        // get_date_results
 #include <sstream>
 #include <iostream>                 // test
 
-Prompt_window::Prompt_window(Point tl, int w, int h, const std::string& title,
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+std::unique_ptr<In_box>
+Widget_factory::create_large_in_box(std::string label)
+{
+    return std::make_unique<In_box>(origin, large_box_w, box_h,
+                                    std::move(label));
+}
+
+std::unique_ptr<In_box>
+Widget_factory::create_small_in_box(std::string label)
+{
+    return std::make_unique<In_box>(origin, small_box_w, box_h,
+                                    std::move(label));
+}
+
+std::unique_ptr<Button>
+Widget_factory::create_button(std::string label)
+{
+    return std::make_unique<Button>(origin, button_w, box_h,
+                                    std::move(label));
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+Birthday_win::Birthday_win(Point tl, int w, int h, const std::string& title,
         Widget_factory& factory)
     : Window{tl, w, h, title},
     prompt  {"Enter date of birth:", Point{0, 0}, Text::Align::center},
@@ -25,7 +50,7 @@ Prompt_window::Prompt_window(Point tl, int w, int h, const std::string& title,
 
     // Shapes
     attach(prompt);
-    prompt.move(x_mid, y_mid - year->get_height() - vert_pad);
+    prompt.move(x_mid, y_mid - year->get_height() - vert_pad * 2);
     prompt.set_color(FL_WHITE);
     prompt.set_font(FL_HELVETICA_BOLD);
     prompt.set_size(48);
@@ -73,7 +98,7 @@ Prompt_window::Prompt_window(Point tl, int w, int h, const std::string& title,
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
-void Prompt_window::show_prompt()
+void Birthday_win::show_prompt()
 {
     attach(prompt);
     attach(date_err);
@@ -84,7 +109,7 @@ void Prompt_window::show_prompt()
     submit->show();
 }
 
-void Prompt_window::clear_prompt()
+void Birthday_win::clear_prompt()
 {
     date_err.set_content("");
     detach_shapes();
@@ -99,7 +124,7 @@ void Prompt_window::clear_prompt()
     submit->hide();
 }
 
-void Prompt_window::show_results()
+void Birthday_win::show_results()
 {
     for (auto& t : results)
         attach(t);
@@ -107,7 +132,7 @@ void Prompt_window::show_results()
     reset->show();
 }
 
-void Prompt_window::clear_results()
+void Birthday_win::clear_results()
 {
     detach_shapes();
     results.clear();
@@ -117,7 +142,7 @@ void Prompt_window::clear_results()
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
-void Prompt_window::fill_results(std::vector<std::string>& vs)
+void Birthday_win::fill_results(std::vector<std::string>& vs)
 {
     results.emplace_back(Text{std::move(vs[0]),
                               prompt.point(0),
@@ -137,7 +162,9 @@ void Prompt_window::fill_results(std::vector<std::string>& vs)
     }
 }
 
-void Prompt_window::submit_pressed()
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+void Birthday_win::submit_pressed()
 {
     std::stringstream ss;
     ss << year->get_string() << '-'
@@ -158,31 +185,9 @@ void Prompt_window::submit_pressed()
     show_results();
 }
 
-void Prompt_window::reset_pressed()
+void Birthday_win::reset_pressed()
 {
     clear_results();
     show_prompt();
 }
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
-
-std::unique_ptr<In_box>
-Widget_factory::create_large_in_box(std::string label)
-{
-    return std::make_unique<In_box>(origin, large_box_w, box_h,
-                                    std::move(label));
-}
-
-std::unique_ptr<In_box>
-Widget_factory::create_small_in_box(std::string label)
-{
-    return std::make_unique<In_box>(origin, small_box_w, box_h,
-                                    std::move(label));
-}
-
-std::unique_ptr<Button>
-Widget_factory::create_button(std::string label)
-{
-    return std::make_unique<Button>(origin, button_w, box_h,
-                                    std::move(label));
-}

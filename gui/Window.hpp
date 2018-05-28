@@ -12,7 +12,7 @@
 
 namespace Simple_graphics {
 
-    class Shape;
+    class Shape;            // forward declarations
     class Widget;
 
     class Window : public Fl_Double_Window {
@@ -23,8 +23,11 @@ namespace Simple_graphics {
                 init();
             }
 
-            void attach(Shape& s) { shapes.push_back(&s); }
+            void attach(Shape& s);
             void attach(Widget&);
+
+            void detach(Shape& s);
+            void detach(Widget& w);
 
             void detach_shapes() { shapes.clear(); }
 
@@ -38,6 +41,7 @@ namespace Simple_graphics {
 
             void init() { show(); }
     };
-}
 
-#endif
+}       // of namespace Simple_graphics
+
+#endif  // SG_WINDOW_H

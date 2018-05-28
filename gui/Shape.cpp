@@ -72,4 +72,5 @@ namespace Simple_graphics {
         content = s;
         measured = false;
     }
-}
+
+}       // of namespace Simple_graphics

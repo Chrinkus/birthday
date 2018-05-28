@@ -1,6 +1,12 @@
 //
 // FLTK Abstraction Library
 //
+// Widget abstraction for Fl_Widget warning:
+// - avoid altering widget until after attachment
+// - attachment is when Fl_Widget is instantiated
+// - cannot access Fl_Widget inherited functions until *AFTER* widget is
+//   attached to Window.
+//
 
 #ifndef SG_WIDGET_H
 #define SG_WIDGET_H
@@ -13,7 +19,9 @@ namespace Simple_graphics {
 
     using Callback = void (*)(Fl_Widget*, void*);
 
-    class Window;
+    class Window;               // forward declaration
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
     class Widget {
         public:
@@ -25,6 +33,7 @@ namespace Simple_graphics {
             virtual void hide() { pw->hide(); }
             virtual void show() { pw->show(); }
             virtual void attach(Window&) = 0;
+
             virtual void set_callback(Callback, void*);
             virtual void set_colors(Fl_Color lab, Fl_Color bg);
 
@@ -43,6 +52,8 @@ namespace Simple_graphics {
             std::unique_ptr<Fl_Widget> pw;
     };
 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
     struct Button : Widget {
         Button(Point xy, int ww, int hh, const std::string& ss)
             : Widget{xy, ww, hh, ss} { }
@@ -50,6 +61,8 @@ namespace Simple_graphics {
         void attach(Window&) override;
     };
 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+    
     struct In_box : Widget {
         In_box(Point xy, int ww, int hh, const std::string& ss)
             : Widget{xy, ww, hh, ss} { }
@@ -61,6 +74,7 @@ namespace Simple_graphics {
 
         void set_font(Fl_Font);
     };
-}
 
-#endif
+}       // of namespace Simple_graphics
+
+#endif  // SG_WIDGET_H

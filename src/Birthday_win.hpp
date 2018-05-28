@@ -2,14 +2,16 @@
 // Birthday project
 //
 
-#ifndef BD_PROMPT_WINDOW_H
-#define BD_PROMPT_WINDOW_H
+#ifndef BD_BIRTHDAY_WIN_H
+#define BD_BIRTHDAY_WIN_H
 
 #include "../gui/Window.hpp"
 #include "../gui/Shape.hpp"
 #include "../gui/Widget.hpp"
 
 using namespace Simple_graphics;
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
 class Widget_factory {
     public:
@@ -28,9 +30,11 @@ class Widget_factory {
         int button_h = 24;
 };
 
-class Prompt_window : public Simple_graphics::Window {
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+class Birthday_win : public Simple_graphics::Window {
     public:
-        Prompt_window(Point tl, int w, int h, const std::string& title,
+        Birthday_win(Point tl, int w, int h, const std::string& title,
                 Widget_factory&);
 
     private:
@@ -56,13 +60,13 @@ class Prompt_window : public Simple_graphics::Window {
 
         static void cb_submit(Fl_Widget*, void* data)
         {
-            static_cast<Prompt_window*>(data)->submit_pressed();
+            static_cast<Birthday_win*>(data)->submit_pressed();
         }
 
         static void cb_reset(Fl_Widget*, void* data)
         {
-            static_cast<Prompt_window*>(data)->reset_pressed();
+            static_cast<Birthday_win*>(data)->reset_pressed();
         }
 };
 
-#endif
+#endif  // BD_BIRTHDAY_WIN_H

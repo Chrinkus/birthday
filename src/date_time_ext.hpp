@@ -59,7 +59,7 @@ auto get_date_results(const std::string& s)
         << next_bd.day_of_week().as_long_string() << '.';
     res.emplace_back(ss2.str());
 
-    auto sat_bd = next_date_of_day(next_bd, Saturday);
+    auto sat_bd = next_date_of_day(inc_year(next_bd), Saturday);
     ss3 << "The next time your birthday is on a Saturday is in "
         << sat_bd.year() << '.';
     res.emplace_back(ss3.str());

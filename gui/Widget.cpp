@@ -41,10 +41,6 @@ namespace Simple_graphics {
 
     void In_box::attach(Window& win)
     {
-        /*
-        pw = std::make_unique<Fl_Input>(loc.x, loc.y, w, h);
-        static_cast<Fl_Input*>(pw.get())->textsize(h - 4);
-        */
         auto pi = std::make_unique<Fl_Input>(loc.x, loc.y, w, h, lab.c_str());
         pi->align(FL_ALIGN_BOTTOM);
         pi->labelsize(24);
@@ -60,10 +56,6 @@ namespace Simple_graphics {
 
     std::string In_box::get_string() const
     {
-        /*
-        auto pib = static_cast<Fl_Input*>(pw.get());
-        return std::string{ pib->value() };
-        */
         return std::string{ static_cast<Fl_Input*>(pw.get())->value() };
     }
 
@@ -71,4 +63,5 @@ namespace Simple_graphics {
     {
         static_cast<Fl_Input*>(pw.get())->textfont(f);
     }
-}
+
+}       // of namespace Simple_graphics

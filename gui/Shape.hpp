@@ -5,7 +5,7 @@
 #ifndef SG_SHAPE_H
 #define SG_SHAPE_H
 
-#include <FL/fl_draw.H>
+#include <FL/fl_draw.H>         // Needed for FL enumerations(Color, Font, etc)
 #include <string>
 #include <vector>
 #include "Point.hpp"
@@ -14,7 +14,7 @@ namespace Simple_graphics {
 
     class Shape {
         public:
-            void draw() const;
+            void draw() const;      // handles color and calls draw_lines()
 
             void set_color(Fl_Color c) { lcolor = c; }
             Fl_Color get_color() const { return lcolor; }
@@ -26,6 +26,8 @@ namespace Simple_graphics {
             virtual ~Shape() = default;
 
         protected:
+            Shape() = default;
+
             virtual void draw_lines() const;
 
             void add(Point p) { points.push_back(p); }
@@ -35,9 +37,13 @@ namespace Simple_graphics {
             Fl_Color lcolor { fl_color() };
     };
 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
     struct Line : Shape {
         Line(Point p1, Point p2) { add(p1); add(p2); }
     };
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
     class Text : public Shape {
         public:
@@ -48,7 +54,7 @@ namespace Simple_graphics {
 
             void measure() const;
 
-            // changing either requires new measurement
+            // changing any of these requires new measurement
             void set_font(int f) { font = f; measured = false; }
             void set_size(int s) { size = s; measured = false; }
             void set_content(const std::string&);
@@ -59,10 +65,12 @@ namespace Simple_graphics {
             int font { fl_font() };
             int size { 18 };
 
-            mutable int width = 0;          // width of text
-            mutable int height = 0;         // height of text
-            mutable bool measured = false;  // are width and height correct?
+            // fl_measure requires width and height out-params
+            mutable int width = 0;
+            mutable int height = 0;
+            mutable bool measured = false;  // has Text changed?
     };
-}
 
-#endif
+}       // of namespace Simple_graphics
+
+#endif  // SG_SHAPE_H
