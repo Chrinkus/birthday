@@ -7,3 +7,6 @@
 # C++
 *.out
 *.o
+
+# GoogleTest
+/test/lib/
