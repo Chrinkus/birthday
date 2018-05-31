@@ -5,9 +5,9 @@
 #ifndef BD_BIRTHDAY_WIN_H
 #define BD_BIRTHDAY_WIN_H
 
-#include "../gui/Window.hpp"
-#include "../gui/Shape.hpp"
-#include "../gui/Widget.hpp"
+#include "./gui/Window.hpp"
+#include "./gui/Shape.hpp"
+#include "./gui/Widget.hpp"
 
 using namespace Simple_graphics;
 
