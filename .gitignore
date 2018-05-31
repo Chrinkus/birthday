@@ -8,5 +8,5 @@
 *.out
 *.o
 
-# GoogleTest
-/test/lib/
+# Testing
+/test/lib/*

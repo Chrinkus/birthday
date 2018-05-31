@@ -13,24 +13,30 @@ using namespace boost::gregorian;
 // Helper functions
 
 auto inc_year(date d, int n = 1) noexcept
+    // increment the year but keep month and day the same
 {
     return date{d.year() + n, d.month(), d.day()};
 }
 
-auto next_occurrence(date d, date ref = day_clock::local_day()) noexcept
-{
-    return (d < ref) ? inc_year(d) : d;
-}
-
 auto date_in_year(date d, greg_year y = day_clock::local_day().year()) noexcept
+    // return date d in the provided year
 {
     return date{y, d.month(), d.day()};
 }
 
-auto next_date_of_day(date d, greg_day wd) noexcept
+auto next_occurrence(date d, date ref = day_clock::local_day()) noexcept
+    // return the next occurrence of date d after reference date
 {
-    while (d.day_of_week() != wd)
+    auto d_ref_year = date_in_year(d, ref.year());
+    return (d_ref_year <= ref) ? inc_year(d_ref_year) : d_ref_year;
+}
+
+auto next_date_of_day(date d, greg_day wd) noexcept
+    // return the year in which date d falls on weekday wd
+{
+    do {
         d = inc_year(d);
+    } while (d.day_of_week() != wd);
 
     return d;
 }
@@ -38,6 +44,7 @@ auto next_date_of_day(date d, greg_day wd) noexcept
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
 auto get_date_results(const std::string& s)
+    // return vector<string> report of date data
 {
     std::vector<std::string> res;
     std::stringstream ss1;          // QUESTION: Is there a better way?
