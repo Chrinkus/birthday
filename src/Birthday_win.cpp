@@ -30,6 +30,13 @@ Widget_factory::create_button(std::string label)
                                     std::move(label));
 }
 
+std::unique_ptr<Aligned_in_box>
+Widget_factory::create_in_box(std::string label)
+{
+    return std::make_unique<Aligned_in_box>(origin, large_box_w, box_h,
+                                            std::move(label));
+}
+
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
 Birthday_win::Birthday_win(Point tl, int w, int h, const std::string& title,
@@ -37,9 +44,9 @@ Birthday_win::Birthday_win(Point tl, int w, int h, const std::string& title,
     : Window{tl, w, h, title},
     prompt  {"Enter date of birth:", Point{0, 0}, Text::Align::center},
     date_err{"", Point{0, 0}, Text::Align::center},
-    year    {factory.create_large_in_box("YYYY")},
-    month   {factory.create_small_in_box("MM")},
-    day     {factory.create_small_in_box("DD")},
+    year    {factory.create_in_box("YYYY")},
+    month   {factory.create_in_box("MM")},
+    day     {factory.create_in_box("DD")},
     submit  {factory.create_button("SUBMIT")},
     reset   {factory.create_button("RESET")}
 {
@@ -79,6 +86,10 @@ Birthday_win::Birthday_win(Point tl, int w, int h, const std::string& title,
     year->set_colors(FL_WHITE, FL_WHITE);
     month->set_colors(FL_WHITE, FL_WHITE);
     day->set_colors(FL_WHITE, FL_WHITE);
+
+    year->set_align(FL_ALIGN_CENTER);
+    month->set_align(FL_ALIGN_CENTER);
+    day->set_align(FL_ALIGN_CENTER);
 
     attach(*submit);
     submit->move(x_mid - submit->get_width() / 2, y_mid + vert_pad * 3);

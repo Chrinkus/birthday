@@ -75,6 +75,20 @@ namespace Simple_graphics {
         void set_font(Fl_Font);
     };
 
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+    struct Aligned_in_box : Widget {
+        Aligned_in_box(Point xy, int ww, int hh, const std::string& ss)
+            : Widget{xy, ww, hh, ss} { }
+
+        void attach(Window&) override;
+
+        void set_align(Fl_Align);
+
+        void set_string(const std::string& s = "");
+        std::string get_string() const;
+    };
+
 }       // of namespace Simple_graphics
 
 #endif  // SG_WIDGET_H

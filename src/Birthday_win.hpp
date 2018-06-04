@@ -20,6 +20,7 @@ class Widget_factory {
         std::unique_ptr<In_box> create_large_in_box(std::string label);
         std::unique_ptr<In_box> create_small_in_box(std::string label);
         std::unique_ptr<Button> create_button(std::string label);
+        std::unique_ptr<Aligned_in_box> create_in_box(std::string label);
 
     private:
         Point origin {0, 0};
@@ -44,9 +45,9 @@ class Birthday_win : public Simple_graphics::Window {
         std::vector<Text> results;
         void fill_results(std::vector<std::string>&);
 
-        std::unique_ptr<In_box> year;
-        std::unique_ptr<In_box> month;
-        std::unique_ptr<In_box> day;
+        std::unique_ptr<Aligned_in_box> year;
+        std::unique_ptr<Aligned_in_box> month;
+        std::unique_ptr<Aligned_in_box> day;
         std::unique_ptr<Button> submit;
         std::unique_ptr<Button> reset;
 

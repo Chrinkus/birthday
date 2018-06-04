@@ -5,6 +5,7 @@
 #include "Widget.hpp"
 #include <FL/Fl_Input.H>
 #include <FL/Fl_Button.H>
+#include "Fl_Justify_Input.hpp"
 
 namespace Simple_graphics {
 
@@ -62,6 +63,36 @@ namespace Simple_graphics {
     void In_box::set_font(Fl_Font f)
     {
         static_cast<Fl_Input*>(pw.get())->textfont(f);
+    }
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+    void Aligned_in_box::attach(Window& win)
+    {
+        auto pa = std::make_unique<Fl_Justify_Input>(loc.x, loc.y, w, h,
+                lab.c_str());
+        pa->align(FL_ALIGN_BOTTOM);
+        pa->labelsize(24);
+        pa->textsize(h);
+        pw = std::move(pa);
+        own = &win;
+    }
+
+    void Aligned_in_box::set_align(Fl_Align a)
+    {
+        static_cast<Fl_Justify_Input*>(pw.get())->justify(a);
+    }
+
+    void Aligned_in_box::set_string(const std::string& s)
+    {
+        static_cast<Fl_Justify_Input*>(pw.get())->value(s.c_str());
+    }
+
+    std::string Aligned_in_box::get_string() const
+    {
+        return std::string{
+            static_cast<Fl_Justify_Input*>(pw.get())->value()
+        };
     }
 
 }       // of namespace Simple_graphics
