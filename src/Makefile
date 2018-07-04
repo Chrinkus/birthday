@@ -13,15 +13,16 @@ LINK_FLTK = $(shell fltk-config --ldstaticflags)
 LINK_DATE_TIME = -lboost_date_time
 
 # List of Object files
-OBJECTS = main.o Birthday_win.o Window.o Shape.o Widget.o
+OBJECTS = main.o Birthday_win.o Widget_factory.o Window.o Shape.o Widget.o
 
 # Define what target application is called
 all: Birthday
 
 # Define how to build the object files
 main.o: Birthday_win.hpp
-Birthday_win.o: Birthday_win.hpp ./gui/Window.hpp ./gui/Widget.hpp \
-	./gui/Shape.hpp date_time_ext.hpp
+Widget_factory.o: Widget_factory.hpp ./gui/Window.hpp ./gui/Widget.hpp
+Birthday_win.o: Birthday_win.hpp ./gui/Window.hpp Widget_factory.hpp\
+	./gui/Shape.hpp date_time_ext.hpp Color_scheme.hpp
 
 # Really need to bust these out into a local lib
 Window.o: ./gui/Window.cpp ./gui/Window.hpp ./gui/Shape.hpp
