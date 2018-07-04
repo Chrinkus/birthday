@@ -10,3 +10,6 @@
 
 # Testing
 /test/lib/*
+
+# Project executable
+Birthday
