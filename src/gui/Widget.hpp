@@ -36,6 +36,7 @@ namespace Simple_graphics {
 
             virtual void set_callback(Callback, void*);
             virtual void set_colors(Fl_Color lab, Fl_Color bg);
+            virtual void set_box(Fl_Boxtype bt) { pw->box(bt); }
 
             int get_width() const { return w; }
             int get_height() const { return h; }
@@ -54,11 +55,14 @@ namespace Simple_graphics {
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
-    struct Button : Widget {
+    class Button : public Widget {
+    public:
         Button(Point xy, int ww, int hh, const std::string& ss)
             : Widget{xy, ww, hh, ss} { }
 
         void attach(Window&) override;
+    private:
+        Fl_Font button_font = FL_HELVETICA_BOLD;
     };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -68,6 +72,7 @@ namespace Simple_graphics {
             : Widget{xy, ww, hh, ss} { }
 
         void attach(Window&) override;
+        void set_colors(Fl_Color lab, Fl_Color bg, Fl_Color txt);
 
         void set_string(const std::string& s = "");
         std::string get_string() const;

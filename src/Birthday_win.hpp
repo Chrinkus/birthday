@@ -5,32 +5,13 @@
 #ifndef BD_BIRTHDAY_WIN_H
 #define BD_BIRTHDAY_WIN_H
 
+#include <memory>
 #include "./gui/Window.hpp"
 #include "./gui/Shape.hpp"
-#include "./gui/Widget.hpp"
+#include "Widget_factory.hpp"
+#include "Color_scheme.hpp"
 
 using namespace Simple_graphics;
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
-
-class Widget_factory {
-    public:
-        Widget_factory() = default;
-
-        std::unique_ptr<In_box> create_large_in_box(std::string label);
-        std::unique_ptr<In_box> create_small_in_box(std::string label);
-        std::unique_ptr<Button> create_button(std::string label);
-
-    private:
-        Point origin {0, 0};
-        int large_box_w = 104;
-        int small_box_w = 52;
-        int box_h = 36;
-        int button_w = 120;
-        int button_h = 24;
-};
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
 
 class Birthday_win : public Simple_graphics::Window {
     public:
@@ -49,6 +30,8 @@ class Birthday_win : public Simple_graphics::Window {
         std::unique_ptr<In_box> day;
         std::unique_ptr<Button> submit;
         std::unique_ptr<Button> reset;
+
+        std::unique_ptr<Color_scheme> colors;
 
         void show_prompt();
         void clear_prompt();

@@ -15,7 +15,7 @@ int main()
     constexpr int y_max = 450;
     constexpr Point top_left {100, 100};
 
-    Widget_factory fac;             // factory determines widget sizes
+    Thin_factory fac;             // factory determines widget sizes
     Birthday_win pwin {top_left, x_max, y_max, "Birthday", fac};
     return Fl::run();
 }

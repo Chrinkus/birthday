@@ -32,7 +32,8 @@ namespace Simple_graphics {
     void Button::attach(Window& win)
     {
         auto pb = std::make_unique<Fl_Button>(loc.x, loc.y, w, h, lab.c_str());
-        pb->labelsize(h * 0.75);
+        pb->labelsize(h * 0.618);
+        pb->labelfont(button_font);
         pw = std::move(pb);
         own = &win;
     }
@@ -47,6 +48,12 @@ namespace Simple_graphics {
         pi->textsize(h);
         pw = std::move(pi);
         own = &win;
+    }
+
+    void In_box::set_colors(Fl_Color lab, Fl_Color bg, Fl_Color txt)
+    {
+        Widget::set_colors(lab, bg);
+        static_cast<Fl_Input*>(pw.get())->textcolor(txt);
     }
 
     void In_box::set_string(const std::string& s)
