@@ -6,11 +6,11 @@
 CXX = $(shell fltk-config --cxx)
 
 # Set compiler flags
-CXXFLAGS = $(shell fltk-config --cxxflags) -std=c++14
+CXXFLAGS = $(shell fltk-config --cxxflags) -std=c++14 -O3
 
-# Library link
+# Library links
 LINK_FLTK = $(shell fltk-config --ldstaticflags)
-LINK_DATE_TIME = -lboost_date_time
+LINK_DATE_TIME = /usr/local/Cellar/boost/1.67.0_1/lib/libboost_date_time.a
 
 # List of Object files
 OBJECTS = main.o Birthday_win.o Widget_factory.o Window.o Shape.o Widget.o
